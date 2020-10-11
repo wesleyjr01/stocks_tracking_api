@@ -44,7 +44,10 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
-THID_PARTY_APPS = ["rest_framework"]
+THID_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework.authtoken",
+]
 LOCAL_APPS = ["stocks.apps.StocksConfig"]
 INSTALLED_APPS = DJANGO_APPS + THID_PARTY_APPS + LOCAL_APPS
 
@@ -137,4 +140,8 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 50,
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
 }
