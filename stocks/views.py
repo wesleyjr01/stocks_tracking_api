@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
-from .models import Stock
-from .serializers import StockSerializer
+from .models import Stock, Buys
+from .serializers import StockSerializer, BuysSerializer
 from .permissions import IsAdminOrReadOnly
 
 
@@ -14,3 +14,12 @@ class StockDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAdminOrReadOnly,)
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
+
+
+class BuysList(generics.ListCreateAPIView):
+    queryset = Buys.objects.all()
+    serializer_class = BuysSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Buys.objects.filter(owner=user)

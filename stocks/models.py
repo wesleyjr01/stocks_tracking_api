@@ -11,3 +11,15 @@ class Stock(models.Model):
 
     def __str__(self):
         return f"{self.stock_symbol}: {self.company_name}"
+
+
+class Buys(models.Model):
+    stock_symbol = models.CharField(max_length=6)
+    shares = models.IntegerField()
+    share_price_bought = models.FloatField()
+    bought_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.stock_symbol}, shares :{self.shares} at {self.bought_at}"
