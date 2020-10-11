@@ -1,5 +1,4 @@
 -r ./base.txt
 
-semantic-release
 pylint
 black
