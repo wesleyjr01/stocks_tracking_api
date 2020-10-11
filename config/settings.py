@@ -47,6 +47,7 @@ DJANGO_APPS = [
 THID_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
+    "dj_rest_auth",
 ]
 LOCAL_APPS = ["stocks.apps.StocksConfig"]
 INSTALLED_APPS = DJANGO_APPS + THID_PARTY_APPS + LOCAL_APPS
