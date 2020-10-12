@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Stock, Buys, Sells
+from .models import Stock, Buys, Sells, History
 
 
 class StockSerializer(serializers.ModelSerializer):
@@ -36,3 +36,19 @@ class SellsSerializer(serializers.ModelSerializer):
             "owner",
         )
         model = Sells
+
+
+class HistorySerializer(serializers.ModelSerializer):
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        fields = (
+            "id",
+            "stock_symbol",
+            "shares",
+            "share_price",
+            "transaction_type",
+            "transaction_at",
+            "owner",
+        )
+        model = History

@@ -1,6 +1,11 @@
 from rest_framework import generics
-from .models import Stock, Buys, Sells
-from .serializers import StockSerializer, BuysSerializer, SellsSerializer
+from .models import Stock, Buys, Sells, History
+from .serializers import (
+    StockSerializer,
+    BuysSerializer,
+    SellsSerializer,
+    HistorySerializer,
+)
 from .permissions import IsAdminOrReadOnly
 from rest_framework.exceptions import ValidationError
 
@@ -47,6 +52,8 @@ class SellsList(generics.ListCreateAPIView):
         request_user = self.request.user
         request_stock_symbol = self.request.data["stock_symbol"]
         request_shares = int(self.request.data["shares"])
+        request_share_price_sold = self.request.data["share_price_sold"]
+        request_sold_at = self.request.data["sold_at"]
 
         stocks_bought = Buys.objects.filter(
             owner=request_user,
@@ -70,6 +77,16 @@ class SellsList(generics.ListCreateAPIView):
         else:
             serializer.save()
 
+            history_sell_register = History.objects.create(
+                stock_symbol=request_stock_symbol,
+                shares=request_shares,
+                share_price=request_share_price_sold,
+                transaction_type=History.TransactionType.SELL,
+                transaction_at=request_sold_at,
+                owner=request_user,
+            )
+            history_sell_register.save()
+
 
 class SellsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Sells.objects.all()
@@ -78,3 +95,12 @@ class SellsDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return Sells.objects.filter(owner=user)
+
+
+class HistoryList(generics.ListCreateAPIView):
+    queryset = History.objects.all()
+    serializer_class = HistorySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return History.objects.filter(owner=user)

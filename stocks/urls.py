@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import StockList, StockDetail, BuysList, BuysDetail, SellsList, SellsDetail
+from .views import (
+    StockList,
+    StockDetail,
+    BuysList,
+    BuysDetail,
+    SellsList,
+    SellsDetail,
+    HistoryList,
+)
 
 urlpatterns = [
     path("<int:pk>", StockDetail.as_view()),
@@ -8,4 +16,5 @@ urlpatterns = [
     path("buys/", BuysList.as_view()),
     path("sells/<int:pk>/", SellsDetail.as_view()),
     path("sells/", SellsList.as_view()),
+    path("history/", HistoryList.as_view()),
 ]

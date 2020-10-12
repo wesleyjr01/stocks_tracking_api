@@ -32,3 +32,23 @@ class Sells(models.Model):
     sold_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class History(models.Model):
+    class TransactionType(models.TextChoices):
+        UNSPECIFIED = "unspecified", "Unspecified"
+        BUY = "buy", "Buy"
+        SELL = "sell", "Sell"
+
+    stock_symbol = models.CharField(max_length=6)
+    shares = models.IntegerField()
+    share_price = models.FloatField()
+    transaction_type = models.CharField(
+        "Transaction Type",
+        max_length=20,
+        choices=TransactionType.choices,
+        default=TransactionType.UNSPECIFIED,
+    )
+    transaction_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
