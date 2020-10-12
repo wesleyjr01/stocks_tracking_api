@@ -9,6 +9,8 @@ class StockSerializer(serializers.ModelSerializer):
 
 
 class BuysSerializer(serializers.ModelSerializer):
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         fields = (
             "id",
@@ -16,5 +18,6 @@ class BuysSerializer(serializers.ModelSerializer):
             "shares",
             "share_price_bought",
             "bought_at",
+            "owner",
         )
         model = Buys
