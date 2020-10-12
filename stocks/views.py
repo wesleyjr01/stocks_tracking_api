@@ -30,6 +30,27 @@ class BuysList(generics.ListCreateAPIView):
         user = self.request.user
         return Buys.objects.filter(owner=user)
 
+    def perform_create(self, serializer):
+        request_user = self.request.user
+        request_stock_symbol = self.request.data["stock_symbol"]
+        request_shares = int(self.request.data["shares"])
+        request_share_price_bought = self.request.data["share_price_bought"]
+        request_bought_at = self.request.data["bought_at"]
+
+        # save register at buys database
+        serializer.save()
+
+        # save register at history database
+        history_buys_register = History.objects.create(
+            stock_symbol=request_stock_symbol,
+            shares=request_shares,
+            share_price=request_share_price_bought,
+            transaction_type=History.TransactionType.BUY,
+            transaction_at=request_bought_at,
+            owner=request_user,
+        )
+        history_buys_register.save()
+
 
 class BuysDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Buys.objects.all()
@@ -75,8 +96,10 @@ class SellsList(generics.ListCreateAPIView):
             message = f"Not enough {request_stock_symbol} to sell. Available: {current_shares}."
             raise ValidationError(message)
         else:
+            # save register at sells database
             serializer.save()
 
+            # save register at history database
             history_sell_register = History.objects.create(
                 stock_symbol=request_stock_symbol,
                 shares=request_shares,
