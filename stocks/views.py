@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from django.db.models import Sum
 from .models import Stock, Buys, Sells, History
 from .serializers import (
@@ -12,19 +12,13 @@ from .permissions import IsAdminOrReadOnly
 from rest_framework.exceptions import ValidationError
 
 
-class StockList(generics.ListCreateAPIView):
+class StockViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
 
 
-class StockDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAdminOrReadOnly,)
-    queryset = Stock.objects.all()
-    serializer_class = StockSerializer
-
-
-class BuysList(generics.ListCreateAPIView):
+class BuysViewSet(viewsets.ModelViewSet):
     queryset = Buys.objects.all()
     serializer_class = BuysSerializer
 
@@ -54,16 +48,7 @@ class BuysList(generics.ListCreateAPIView):
         history_buys_register.save()
 
 
-class BuysDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Buys.objects.all()
-    serializer_class = BuysSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Buys.objects.filter(owner=user)
-
-
-class SellsList(generics.ListCreateAPIView):
+class SellsViewSet(viewsets.ModelViewSet):
     queryset = Sells.objects.all()
     serializer_class = SellsSerializer
 
@@ -113,16 +98,7 @@ class SellsList(generics.ListCreateAPIView):
             history_sell_register.save()
 
 
-class SellsDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Sells.objects.all()
-    serializer_class = SellsSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Sells.objects.filter(owner=user)
-
-
-class HistoryList(generics.ListAPIView):
+class HistoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
 
@@ -131,7 +107,7 @@ class HistoryList(generics.ListAPIView):
         return History.objects.filter(owner=user)
 
 
-class SummaryList(generics.ListAPIView):
+class SummaryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = History.objects.all()
     serializer_class = SummarySerializer
 

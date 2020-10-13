@@ -1,22 +1,18 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 from .views import (
-    StockList,
-    StockDetail,
-    BuysList,
-    BuysDetail,
-    SellsList,
-    SellsDetail,
-    HistoryList,
-    SummaryList,
+    StockViewSet,
+    SellsViewSet,
+    BuysViewSet,
+    HistoryViewSet,
+    SummaryViewSet,
 )
 
-urlpatterns = [
-    path("", SummaryList.as_view()),
-    path("symbols/<int:pk>", StockDetail.as_view()),
-    path("symbols/", StockList.as_view()),
-    path("buys/<int:pk>/", BuysDetail.as_view()),
-    path("buys/", BuysList.as_view()),
-    path("sells/<int:pk>/", SellsDetail.as_view()),
-    path("sells/", SellsList.as_view()),
-    path("history/", HistoryList.as_view()),
-]
+router = SimpleRouter()
+router.register("symbols", StockViewSet, basename="symbols")
+router.register("buys", BuysViewSet, basename="buys")
+router.register("sells", SellsViewSet, basename="sells")
+router.register("history", HistoryViewSet, basename="history")
+router.register("", SummaryViewSet, basename="summary")
+
+urlpatterns = router.urls
