@@ -1,10 +1,12 @@
 from rest_framework import generics
+from django.db.models import Sum
 from .models import Stock, Buys, Sells, History
 from .serializers import (
     StockSerializer,
     BuysSerializer,
     SellsSerializer,
     HistorySerializer,
+    SummarySerializer,
 )
 from .permissions import IsAdminOrReadOnly
 from rest_framework.exceptions import ValidationError
@@ -120,10 +122,24 @@ class SellsDetail(generics.RetrieveUpdateDestroyAPIView):
         return Sells.objects.filter(owner=user)
 
 
-class HistoryList(generics.ListCreateAPIView):
+class HistoryList(generics.ListAPIView):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
 
     def get_queryset(self):
         user = self.request.user
         return History.objects.filter(owner=user)
+
+
+class SummaryList(generics.ListAPIView):
+    queryset = History.objects.all()
+    serializer_class = SummarySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = (
+            History.objects.filter(owner=user)
+            .values("stock_symbol")
+            .annotate(sum_shares=Sum("shares"))
+        )
+        return queryset

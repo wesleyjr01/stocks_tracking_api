@@ -7,11 +7,13 @@ from .views import (
     SellsList,
     SellsDetail,
     HistoryList,
+    SummaryList,
 )
 
 urlpatterns = [
-    path("<int:pk>", StockDetail.as_view()),
-    path("", StockList.as_view()),
+    path("", SummaryList.as_view()),
+    path("symbols/<int:pk>", StockDetail.as_view()),
+    path("symbols/", StockList.as_view()),
     path("buys/<int:pk>/", BuysDetail.as_view()),
     path("buys/", BuysList.as_view()),
     path("sells/<int:pk>/", SellsDetail.as_view()),

@@ -52,3 +52,14 @@ class HistorySerializer(serializers.ModelSerializer):
             "owner",
         )
         model = History
+
+
+class SummarySerializer(serializers.ModelSerializer):
+    sum_shares = serializers.IntegerField()
+
+    class Meta:
+        fields = (
+            "stock_symbol",
+            "sum_shares",
+        )
+        model = History
