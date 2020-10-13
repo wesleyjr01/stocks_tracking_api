@@ -102,7 +102,7 @@ class SellsList(generics.ListCreateAPIView):
             # save register at history database
             history_sell_register = History.objects.create(
                 stock_symbol=request_stock_symbol,
-                shares=request_shares,
+                shares=-1 * (request_shares),
                 share_price=request_share_price_sold,
                 transaction_type=History.TransactionType.SELL,
                 transaction_at=request_sold_at,
