@@ -1,5 +1,12 @@
 django==3.1.0
 djangorestframework==3.11.0
 python-dotenv==0.14.0
+
+# Django Auth and Registration
 dj-rest-auth==1.1.0
 django-allauth==0.42.0
+
+# Schema Doc Generation
+pyyaml==5.3.1
+uritemplate==3.0.1
+drf-yasg==1.17.1

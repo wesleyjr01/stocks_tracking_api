@@ -53,6 +53,7 @@ THID_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth.registration",
+    "drf_yasg",
 ]
 LOCAL_APPS = ["stocks.apps.StocksConfig"]
 INSTALLED_APPS = DJANGO_APPS + THID_PARTY_APPS + LOCAL_APPS
