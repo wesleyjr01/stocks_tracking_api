@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Stock(models.Model):
-    stock_symbol = models.CharField(max_length=6)
+    stock_symbol = models.CharField(max_length=10)
     company_name = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -14,7 +14,7 @@ class Stock(models.Model):
 
 
 class Buys(models.Model):
-    stock_symbol = models.CharField(max_length=6)
+    stock_symbol = models.CharField(max_length=10)
     shares = models.IntegerField()
     share_price_bought = models.FloatField()
     bought_at = models.DateTimeField()
@@ -26,7 +26,7 @@ class Buys(models.Model):
 
 
 class Sells(models.Model):
-    stock_symbol = models.CharField(max_length=6)
+    stock_symbol = models.CharField(max_length=10)
     shares = models.IntegerField()
     share_price_sold = models.FloatField()
     sold_at = models.DateTimeField()
@@ -40,7 +40,7 @@ class History(models.Model):
         BUY = "buy", "Buy"
         SELL = "sell", "Sell"
 
-    stock_symbol = models.CharField(max_length=6)
+    stock_symbol = models.CharField(max_length=10)
     shares = models.IntegerField()
     share_price = models.FloatField()
     transaction_type = models.CharField(
