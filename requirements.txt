@@ -1,6 +1,8 @@
 django==3.1.0
 djangorestframework==3.11.0
-python-dotenv==0.14.0
+
+# Environment Variables
+django-environ
 
 # Django Auth and Registration
 dj-rest-auth==1.1.0

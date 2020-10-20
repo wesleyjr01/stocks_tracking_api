@@ -11,12 +11,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
-
-from dotenv import load_dotenv
 
 # Load sensitive data from .env file
-load_dotenv()
+import environ
+
+base = environ.Path(__file__) - 2  # root project dir
+env = environ.Env()
+environ.Env.read_env(env_file=base(".env"))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -26,10 +27,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -97,12 +98,13 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USERNAME"),
-        "PASSWORD": os.environ.get("DB_USERNAME_PASSWORD"),
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USERNAME"),
+        "PASSWORD": env("DB_PASSWORD"),
         "HOST": "localhost",
         "PORT": "",
-    }
+    },
+    "extra": env.db("SQLITE_URL", default="sqlite:////tmp/my-tmp-sqlite.db"),
 }
 
 
