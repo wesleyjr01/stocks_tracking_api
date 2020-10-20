@@ -13,3 +13,6 @@ drf-yasg==1.17.1
 
 # postgres configuration
 psycopg2
+
+# hero integration
+django-heroku
