@@ -104,7 +104,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "",
     },
-    "extra": env.db("SQLITE_URL", default="sqlite:////tmp/my-tmp-sqlite.db"),
+    # "extra": env.db("SQLITE_URL", default="sqlite:////tmp/my-tmp-sqlite.db"),
 }
 
 
