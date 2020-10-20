@@ -18,3 +18,7 @@ psycopg2
 
 # hero integration
 django-heroku
+whitenoise
+
+# WSGI HTTP web server for Unix
+gunicorn
