@@ -1,5 +1,4 @@
-from django.urls import path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 from .views import (
     StockViewSet,
     SellsViewSet,
@@ -8,11 +7,11 @@ from .views import (
     SummaryViewSet,
 )
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register("symbols", StockViewSet, basename="symbols")
 router.register("buys", BuysViewSet, basename="buys")
 router.register("sells", SellsViewSet, basename="sells")
 router.register("history", HistoryViewSet, basename="history")
-router.register("", SummaryViewSet, basename="summary")
+router.register("summary", SummaryViewSet, basename="summary")
 
 urlpatterns = router.urls
