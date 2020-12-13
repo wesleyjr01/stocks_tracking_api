@@ -32,7 +32,15 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+# Allow localhost
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "[::1]",
+]
+
+# Allow given hosts on the environment
+ALLOWED_HOSTS += env.list("ALLOWED_HOSTS", default="")
 
 
 # APPS
@@ -99,11 +107,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USERNAME"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": "localhost",
-        "PORT": "",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("HOST"),
+        "PORT": env("POSTGRES_PORT"),
     },
     # "extra": env.db("SQLITE_URL", default="sqlite:////tmp/my-tmp-sqlite.db"),
 }
@@ -171,7 +179,7 @@ SWAGGER_SETTINGS = {
 }
 
 # Configure Django App for Heroku.
-import django_heroku
+# import django_heroku
 
-django_heroku.settings(locals())
-TEST_RUNNER = "django_heroku.HerokuDiscoverRunner"
+# django_heroku.settings(locals())
+# TEST_RUNNER = "django_heroku.HerokuDiscoverRunner"
