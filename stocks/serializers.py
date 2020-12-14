@@ -6,6 +6,7 @@ class StockSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ("id", "stock_symbol", "company_name")
         model = Stock
+        ordering = ["-id"]
 
 
 class BuysSerializer(serializers.ModelSerializer):
@@ -21,6 +22,7 @@ class BuysSerializer(serializers.ModelSerializer):
             "owner",
         )
         model = Buys
+        ordering = ["-id"]
 
 
 class SellsSerializer(serializers.ModelSerializer):
@@ -36,6 +38,7 @@ class SellsSerializer(serializers.ModelSerializer):
             "owner",
         )
         model = Sells
+        ordering = ["-id"]
 
 
 class HistorySerializer(serializers.ModelSerializer):
@@ -52,6 +55,7 @@ class HistorySerializer(serializers.ModelSerializer):
             "owner",
         )
         model = History
+        ordering = ["-id"]
 
 
 class SummarySerializer(serializers.ModelSerializer):
