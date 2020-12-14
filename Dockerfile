@@ -1,4 +1,5 @@
-FROM python:3.8
+# FROM python:3.8
+FROM python:3.8-alpine
 
 WORKDIR /app
 
@@ -6,20 +7,9 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
-# # Install system dependencies
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     # tzdata \
-#     python3-setuptools \
-#     python3-pip \
-#     python3-dev \
-#     python3-venv \
-#     git \
-#     && \
-#     apt-get clean && \
-#     rm -rf /var/lib/apt/lists/*
-
-# # # install environment dependencies
-# RUN pip3 install --upgrade pip 
-
-# Install project dependencies
-RUN pip install -r requirements.txt
+RUN \
+    apk add bash && \
+    apk add --no-cache postgresql-libs && \
+    apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
+    python3 -m pip install -r requirements.txt --no-cache-dir && \
+    apk --purge del .build-deps
