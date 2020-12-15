@@ -5,6 +5,7 @@ if [ ! -f $FIRST_TIME ]; then
     if [ -f "manage.py" ]; then
 
         echo ":: Running migrations"
+        python manage.py makemigrations
         python manage.py migrate --no-input
 
         echo ":: Importing fixtures"
