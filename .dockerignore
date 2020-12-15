@@ -5,3 +5,4 @@ venv/
 venv
 CHANGELOG.md
 db.sqlite3
+.vscode/
