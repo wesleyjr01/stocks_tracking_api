@@ -34,10 +34,6 @@ DEBUG = env("DEBUG")
 
 # Allow localhost
 ALLOWED_HOSTS = [
-    "0.0.0.0",
-    "127.0.0.1",
-    "localhost",
-    "[::1]",
 ]
 
 # Allow given hosts on the environment
