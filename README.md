@@ -7,3 +7,6 @@
 # curl requests:
 * **GET on endpoint with Token**: `curl -X GET "http://127.0.0.1:8000/api/" -H "Authorization: Token <token>"`
 * **Auth with POST**: `curl -X POST "http://127.0.0.1:8000/api/rest-auth/login/" -H "Content-Type: application/json" -d '{"username": "<usr>", "email": "<email>", "password": "<pwd>"}'`
+
+### Persistent data at
+* `/var/lib/docker/volumes`
